@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<typeAliases>
+		<typeAlias alias="CounselVO" type="com.crizen.task3.vo.CounselVO"></typeAlias>
+		<typeAlias alias="ReplyVO" type="com.crizen.task3.vo.ReplyVO"></typeAlias>
+		<typeAlias alias="SlangVO" type="com.crizen.task3.vo.SlangVO"></typeAlias>
+		<typeAlias alias="MemberVO" type="com.crizen.task3.vo.MemberVO"></typeAlias>
+		<typeAlias alias="AuthVO" type="com.crizen.task3.vo.AuthVO"></typeAlias>
+	</typeAliases>
+</configuration>

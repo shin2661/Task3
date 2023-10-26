@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crizen.task3.mapper.ReplyMapper">
+	<insert id="insertReply">
+		INSERT INTO COUNSEL_REPLY
+		VALUE
+			(null
+			, #{seq_counsel}
+			, #{reply_writer}
+			, #{reply_content}
+			, now()
+			)
+	</insert>
+	
+	<!-- 댓글삭제 -->
+	<delete id="deleteReply">
+		DELETE FROM COUNSEL_REPLY
+		WHERE seq_reply = #{seq_reply}
+	</delete>
+	
+	<!-- 댓글수정 -->
+	<update id="updateReply">
+		UPDATE COUNSEL_REPLY
+		SET
+			reply_content = #{reply_content}
+			, reply_date = now()
+		WHERE seq_reply = #{seq_reply}
+	</update>
+</mapper>

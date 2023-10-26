@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crizen.task3.mapper.CounselMapper">
+	
+	<!-- 글등록 -->
+	<insert id="insertCounsel">
+		<selectKey keyProperty="seq_counsel" resultType="int" order="BEFORE">
+			SELECT NEXTVAL(seq_counsel)
+		</selectKey>
+		INSERT INTO 
+			COUNSEL_INFO(
+			seq_counsel
+			, counsel_writer
+			, counsel_subject
+			, counsel_content
+			, counsel_date
+			)
+		VALUE
+			(#{seq_counsel}
+			, #{counsel_writer}
+			, #{counsel_subject}
+			, #{counsel_content}
+<!-- 			, SUBDATE(now(), INTERVAL 5 DAY) -->
+			, now()
+			)
+	</insert>
+	
+	<!-- 글목록 -->
+	<select id="selectCounselList" resultType="CounselVO">
+		SELECT * FROM COUNSEL_INFO
+		ORDER BY counsel_date DESC
+	</select>
+
+	<!-- 글상세보기 -->
+	<select id="selectCounsel" resultType="CounselVO">
+		SELECT * FROM COUNSEL_INFO
+		WHERE seq_counsel = #{seq_counsel}
+	</select>
+	
+	<!-- 댓글목록 -->
+	<select id="selectReplyList" resultType="ReplyVO">
+		SELECT * FROM COUNSEL_REPLY
+		WHERE seq_counsel = #{seq_counsel}
+		ORDER BY reply_date DESC
+	</select>
+	
+	<!-- 글삭제 -->
+	<delete id="deleteCounsel">
+		DELETE FROM COUNSEL_INFO
+		WHERE seq_counsel = #{seq_counsel}
+	</delete>
+	
+	<!-- 글수정 -->
+	<update id="updateCounsel">
+		UPDATE COUNSEL_INFO
+		SET
+			seq_counsel = #{seq_counsel}
+			, counsel_subject = #{counsel_subject}
+			, counsel_content = #{counsel_content}
+			, counsel_update_date = now()
+			, counsel_update_writer = #{counsel_update_writer}
+		WHERE seq_counsel = #{seq_counsel}
+	</update>
+</mapper>

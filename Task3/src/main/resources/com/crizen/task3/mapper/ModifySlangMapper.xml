@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crizen.task3.mapper.ModifySlangMapper">
+
+	<!-- 비속어조회 -->
+	<select id="selectSlangList" resultType="SlangVO">
+		SELECT * FROM SLANG
+	</select>
+	
+	<!-- 게시글조회 -->
+	<select id="selectCounselList" resultType="CounselVO">
+		SELECT * FROM COUNSEL_INFO
+	</select>
+	
+	<!-- 댓글조회 -->
+	<select id="selectReplyList" resultType="ReplyVO">
+		SELECT * FROM COUNSEL_REPLY
+	</select>
+	
+	<!-- 게시글 비속어 마스킹 -->
+	<update id="updateCounselSlang">
+	    UPDATE 
+	    	COUNSEL_INFO
+	    SET
+	        counsel_writer = #{counsel_writer}
+	        , counsel_subject = #{counsel_subject}
+	        , counsel_content = #{counsel_content}
+	    WHERE 
+	    	seq_counsel = #{seq_counsel}
+	</update>
+	
+	<!-- 댓글 비속어 마스킹 -->
+	<update id="updateReplySlang">
+	    UPDATE 
+	    	COUNSEL_REPLY
+	    SET
+	    	reply_writer = #{reply_writer}
+	    	, reply_content = #{reply_content}
+	    WHERE seq_reply = #{seq_reply}
+	</update>
+
+</mapper>
