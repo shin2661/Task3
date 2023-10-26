@@ -20,15 +20,16 @@
 	 <!-- 사용자 정보를 가져오기 -->
     <select id="read" parameterType="string" resultMap="memberMap">
         SELECT * 
-        FROM MEMBER m
-        LEFT JOIN AUTH a
-        ON m.id = a.id
-        WHERE m.id = #{userId}
+	        FROM USER_INFO u
+	        LEFT JOIN AUTH a
+	        ON u.id = a.id
+	        WHERE u.id = #{userId}
     </select>
 
+	<!-- 회원가입 -->
 	<insert id="insertMember">
 		INSERT INTO 
-			MEMBER(id
+			USER_INFO(id
 				,name
 				, passwd
 				, regist_date)
@@ -39,4 +40,28 @@
 				, NOW()
 			)
 	</insert>
+	
+	<!-- 회원정보 조회 -->
+	<select id="selectMemebr">
+		 SELECT * 
+	        FROM USER_INFO 
+	        WHERE id = #{id}
+	</select>
+	
+	<!-- 비밀번호 실패횟수 초기화 -->
+	<update id="updateFailCount">
+		UPDATE USER_INFO
+			SET fail_count = #{fail_count}
+			WHERE id = #{id}
+	</update>
+	
+	<!-- 회원정보 수정(계정잠금) -->
+	<update id="updateMember">
+		UPDATE USER_INFO
+			SET 
+				passwd = #{passwd}
+				, fail_count = #{fail_count}
+				, locked = #{locked}
+			WHERE id = #{id}
+	</update>
 </mapper>

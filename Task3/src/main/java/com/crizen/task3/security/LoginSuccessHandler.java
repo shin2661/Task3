@@ -6,6 +6,8 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.web.*;
@@ -13,12 +15,17 @@ import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.savedrequest.*;
 import org.springframework.stereotype.*;
 
+import com.crizen.task3.service.MemberService;
+import com.crizen.task3.vo.MemberVO;
+
 import lombok.extern.slf4j.*;
 
 @Slf4j
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
+	@Autowired
+	private MemberService service;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth) throws IOException, ServletException {
@@ -55,6 +62,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		   
 //		res.sendRedirect(req.getContextPath()+"/");
 		System.out.println("-------------------------------------------------------------------");
+		
+		// 로그인 5회 실패 전 로그인 성공할경우 실패 횟수 리셋을 위해 엔티티 조회
+		MemberVO member = service.getMember(auth.getName()); // 사용자의 ID를 기반으로 멤버 정보를 가져옴
+		if (member != null && member.getFail_count() < 5) {
+		    member.setFail_count(0); // 실패 횟수 리셋
+		    service.resetFailCount(member.getFail_count()); // 멤버 정보 업데이트
+		}
+
+		
+		
 		// Security가 요청을 가로챈 경우 사용자가 원래 요청했던 URI 정보를 저장한 객체
 		RequestCache requestCache = new HttpSessionRequestCache();
 		RedirectStrategy redirectStratgy = new DefaultRedirectStrategy();

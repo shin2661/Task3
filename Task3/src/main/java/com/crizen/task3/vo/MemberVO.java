@@ -13,7 +13,10 @@ public class MemberVO {
 	private String name;
 	private Date regist_date;
 	private Date update_date;
-	private boolean enabled;
+	private int fail_count;
+	
+	private int enabled;
+	private int locked;
 	private List<AuthVO> authList;
 
 }

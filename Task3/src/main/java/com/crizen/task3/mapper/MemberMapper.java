@@ -12,4 +12,13 @@ public interface MemberMapper {
 	// 회원가입
 	int insertMember(MemberVO member);
 
+	// 회원정보 조회
+	MemberVO selectMember(String id);
+
+	// 비밀번호 실패횟수 초기화
+	void updateFailCount(int fail_count);
+
+	// 회원정보 수정
+	void updateMember(MemberVO member);
+
 }
