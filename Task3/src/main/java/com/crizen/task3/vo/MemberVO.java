@@ -17,6 +17,6 @@ public class MemberVO {
 	
 	private int enabled;
 	private int locked;
-	private List<AuthVO> authList;
+	private List<AuthVO> authList = new ArrayList<>();
 
 }

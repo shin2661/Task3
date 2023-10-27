@@ -47,15 +47,17 @@
 					<input class="form-control" id="inputPassword" type="password" name="passwd" placeholder="8자리 이상 비밀번호">
 					<span id="passwdCheckArea">숫자, 문자, 특수문자 포함 8자리 이상</span>
 				</div>
-				<div class="form-check mb-3">
-					<input class="form-check-input" id="inputRememberPassword" type="checkbox" value="">
-					<label class="form-check-label" for="inputRememberPassword">아이디 저장하기</label>
-				</div>
-				<div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+				<div class="d-flex align-items-center justify-content-between">
 					<div>
 						<a class="small text-white" href="joinForm.do">회원가입</a>
-						<a class="small text-white" href="password.html">비밀번호 찾기</a>
+						<a class="small text-white" href="passwdChangeForm.do">비밀번호 변경</a>
 					</div>
+					<div>
+						<input class="form-check-input" id="inputRememberPassword" name="remember-me" type="checkbox" value="true">
+						<label class="form-check-label" for="inputRememberPassword">Remember me</label>
+					</div>
+				</div>
+				<div class="text-center mt-4">
 					<button class="btn btn-warning" type="submit">로그인</button>
 				</div>
 			</form:form>

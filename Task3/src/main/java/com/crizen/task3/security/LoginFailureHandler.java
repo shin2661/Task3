@@ -11,6 +11,7 @@ import org.springframework.security.core.*;
 import org.springframework.security.web.authentication.*;
 import org.springframework.stereotype.*;
 
+import com.crizen.task3.mapper.*;
 import com.crizen.task3.service.MemberService;
 import com.crizen.task3.vo.MemberVO;
 
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.*;
 public class LoginFailureHandler implements AuthenticationFailureHandler {
 	
 	@Autowired
-	private MemberService service;
+	private MemberMapper mapper;
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse res, AuthenticationException accessException) throws IOException, ServletException {
@@ -35,17 +36,27 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 		} else if(accessException instanceof BadCredentialsException) {
 			// 실패한 계정을 기반으로 멤버 정보 가져오기
 	        String id = req.getParameter("id");
-	        MemberVO member = service.getMember(id);
-
-	        // 5회 이상 실패하면 계정을 잠그고 업데이트
-	        if (member != null && member.getFail_count() >= 4) { // 여기서 4는 이미 실패한 상태이므로 총 5회를 의미합니다.
-	            member.setFail_count(member.getFail_count() + 1); // 실패 횟수 증가
-	            member.setLocked(1); // 계정 잠금 상태로 설정
-	            service.modifyMember(member); // 멤버 정보 업데이트
+	        MemberVO member = mapper.selectMember(id);
+	        
+	        // 회원정보가 존재할 경우
+	        if (member != null) {
+		        // 5회 이상 실패하면 계정을 잠그고 업데이트
+		        if (member.getFail_count() >= 4) {
+		        	member.setFail_count(member.getFail_count() + 1);
+		            member.setLocked(1); // 계정 잠금 상태로 설정
+		            mapper.updateLocked(member); // 멤버 정보 업데이트
+		            req.setAttribute("error", "비밀번호 5회 오류로 계정이 비활성화 되었습니다. 비밀번호를 변경해 주세요.");
+		            
+		        }else {
+		        	// 실패횟수 증가
+		        	member.setFail_count(member.getFail_count() + 1);
+		        	mapper.updateFailCount(member);
+		        	req.setAttribute("error", "비밀번호 " + member.getFail_count() + "회 오류. 5회 이상 오류 시 계정이 비활성화 됩니다.");
+		        }
+	        }else {
+	        	req.setAttribute("error", "아이디 또는 비밀번호가 틀립니다.");
+	        	
 	        }
-			
-			req.setAttribute("error", "아이디 또는 비밀번호가 틀립니다.");
-			
 		} else if(accessException instanceof LockedException) {
 			req.setAttribute("error", "잠긴 계정입니다..");
 			

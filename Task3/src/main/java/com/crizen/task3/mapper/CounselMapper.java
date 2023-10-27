@@ -29,6 +29,16 @@ public interface CounselMapper {
 	// 글수정
 	int updateCounsel(CounselVO counsel);
 
+	// 검색기능 추가한 목록 조회
+	List<CounselVO> selectCounselListForSearch(@Param("searchType") String searchType, 
+												@Param("searchKeyword") String searchKeyword, 
+												@Param("startRow") int startRow, 
+												@Param("listLimit") int listLimit);
+
+	// 
+	int selectCounselListCount(@Param("searchType") String searchType, 
+			@Param("searchKeyword") String searchKeyword);
+
 	
 
 }

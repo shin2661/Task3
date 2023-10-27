@@ -41,10 +41,17 @@
 					password-parameter="passwd" />
 		
 		<!-- 로그아웃 설정 -->
-		<logout logout-url="/logout" logout-success-url="/main.do" invalidate-session="true"/>
-		
+		<logout logout-url="/logout" 
+				logout-success-url="/main.do" 
+				invalidate-session="true"
+				delete-cookies="remember-me"/>
+				
 		<!-- 권한이 없어서 금지된 URI 접속할 때 보여줄 페이지(403 에러 페이지 대체) -->
 <!-- 		<access-denied-handler error-page="/accessDenied.do"/> -->
+
+		<remember-me token-validity-seconds="604800" 
+		            data-source-ref="dataSource"
+		            authentication-success-handler-ref="loginSuccessHandler" />
 	</http>
 	
 	<beans:bean id="customUserDetailsService" class="com.crizen.task3.security.CustomUserDetailsService"/>
@@ -56,6 +63,7 @@
         </authentication-provider>
     </authentication-manager>
     
+    
 <!--     <authentication-manager> -->
 <!--         <authentication-provider> -->
 <!--             <user-service> -->
@@ -64,8 +72,7 @@
 <!--             </user-service> -->
 <!--         </authentication-provider> -->
 <!--     </authentication-manager> -->
+
+<!-- 	<global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/> -->
     
-   
-    
-<!-- 	<beans:bean id="expressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" /> -->
 </beans:beans>

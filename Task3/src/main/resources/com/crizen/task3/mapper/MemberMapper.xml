@@ -41,8 +41,19 @@
 			)
 	</insert>
 	
+	<!-- 회원가입 시 ROLE_USER부여 -->
+	<insert id="insertAuth">
+		INSERT INTO 
+			AUTH(id
+				,auth)
+			VALUES(
+				#{id}
+				, #{auth}
+			)
+	</insert>
+	
 	<!-- 회원정보 조회 -->
-	<select id="selectMemebr">
+	<select id="selectMember" resultType="MemberVO">
 		 SELECT * 
 	        FROM USER_INFO 
 	        WHERE id = #{id}
@@ -57,6 +68,33 @@
 	
 	<!-- 회원정보 수정(계정잠금) -->
 	<update id="updateMember">
+		UPDATE USER_INFO
+			SET 
+				passwd = #{passwd}
+				, fail_count = #{fail_count}
+				, locked = #{locked}
+			WHERE id = #{id}
+	</update>
+	
+	<!-- 비밀번호 확인 -->
+	<select id="selectPasswd" resultType="string">
+		SELECT passwd 
+	        FROM USER_INFO 
+	        WHERE id = #{id}
+	</select>
+	
+	<!-- 계정잠금/해제 -->
+	<update id="updateLocked">
+		UPDATE USER_INFO
+			SET 
+				passwd = #{passwd}
+				, fail_count = #{fail_count}
+				, locked = #{locked}
+			WHERE id = #{id}
+	</update>
+
+	<!-- 비밀번호 변경 -->
+	<update id="updatePasswd">
 		UPDATE USER_INFO
 			SET 
 				passwd = #{passwd}
