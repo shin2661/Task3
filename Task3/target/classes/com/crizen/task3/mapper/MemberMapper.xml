@@ -73,6 +73,7 @@
 				passwd = #{passwd}
 				, fail_count = #{fail_count}
 				, locked = #{locked}
+				, enabled = #{isEnabled}
 			WHERE id = #{id}
 	</update>
 	
@@ -90,6 +91,7 @@
 				passwd = #{passwd}
 				, fail_count = #{fail_count}
 				, locked = #{locked}
+				, enabled = #{isEnabled}
 			WHERE id = #{id}
 	</update>
 

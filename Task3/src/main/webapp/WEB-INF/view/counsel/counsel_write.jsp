@@ -12,36 +12,28 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script> 
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css" />
 <title>글쓰기</title>
-<style type="text/css">
-	.article {
-		width: 100%;
-		max-width: 420px;
-		padding: 15px;
-		margin: auto;
-	}
-</style>
 </head>
 <body>
 	<jsp:include page="../inc/header_light.jsp"></jsp:include>
-	<div class="article">
+	<div class="container">
 		<form class="form-signin" action="counselWritePro.do">
 			<div class="text-center mb-4">
 				<h1 class="h3 mb-3 font-weight-normal">글쓰기</h1>
 			</div>
-			<table class="table table-borderless">
+			<table class="table table-bordered">
 				<tbody>
 					<tr>
-						<th scope="row">작성자</th>
-						<td><input type="text" name="counsel_writer" class="form-control"  required="required" readonly="readonly"></td>
-<%-- 						<td><input type="text" name="counsel_writer" class="form-control" required="required" readonly="readonly" value='<sec:authentication property="principal.id"/>'></td> --%>
+						<th scope="row" class="text-center">작성자</th>
+						<sec:authentication property="principal" var="user"/>
+						<td><input type="text" name="counsel_writer" class="form-control" required="required" readonly="readonly" value='${user.username}'></td>
 					</tr>
 					<tr>
-						<th scope="row">제목</th>
+						<th scope="row" class="text-center">제목</th>
 						<td><input type="text" name="counsel_subject" class="form-control" required="required" autofocus=""></td>
 					</tr>
 					<tr>
-						<th scope="row">내용</th>
-						<td><textarea class="form-control" rows="3" name="counsel_content" required="required"></textarea></td>
+						<th scope="row" class="text-center">내용</th>
+						<td><textarea class="form-control" rows="10" name="counsel_content" required="required"></textarea></td>
 					</tr>
 				</tbody>
 			</table>

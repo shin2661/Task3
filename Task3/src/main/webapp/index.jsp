@@ -25,7 +25,7 @@
 		<div class="article">
 			<div class="d-grid gap-2">
 				<a href="counselWriteForm.do" class="btn btn-outline-dark" type="button">글쓰기</a>
-				<a href="counselList.do" class="btn btn-outline-dark" type="button">글목록조회</a>
+				<a href="${pageContext.request.contextPath}/counselList.do" class="btn btn-outline-dark" type="button">글목록조회</a>
 				<a href="slangRegistForm.do" class="btn btn-outline-dark">비속어등록</a>
 			</div>
 		</div>

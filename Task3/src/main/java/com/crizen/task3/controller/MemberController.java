@@ -41,6 +41,7 @@ public class MemberController {
 	@RequestMapping("joinForm.do")
 	public String jointForm() {
 		log.info("joinForm");
+		
 		return "member/join_form";
 	}
 	
@@ -64,9 +65,11 @@ public class MemberController {
 		if(insertCount == 0) {
 			model.addAttribute("msg", "회원가입 실패");
 			return "fail_back";
+		}else {
+			model.addAttribute("msg", "회원가입 성공");
+			model.addAttribute("targetURL", "loginForm.do");
+			return "success_forward";
 		}
-		
-		return "member/login_form";
 	}
 	
 	// 비밀번호 변경 폼으로 이동
@@ -121,6 +124,7 @@ public class MemberController {
 		member.setPasswd(passwordEncoder.encode(passwd));
 		member.setFail_count(0);
 		member.setLocked(0);
+		member.setIsEnabled(0);
 		int updateCount = service.changePasswd(member);
 		
 		if(updateCount > 0) {
@@ -128,6 +132,20 @@ public class MemberController {
 		}else {
 			return "false";
 		}
+	}
+	
+	@RequestMapping("/secured/counselList.do")
+	public String securedList() {
+		log.info("securedList");
+		
+		return "counsel/counsel_list";
+	}
+	
+	@RequestMapping("/admin/adminPage.do")
+	public String adminPage() {
+		log.info("adminPage");
+		
+		return "/member/admin_page";
 	}
 	
 	

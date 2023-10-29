@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.*;
 import org.springframework.security.core.userdetails.*;
@@ -71,9 +72,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		// 1. 계정이 잠겼을 때
 		if (member != null && member.getFail_count() >= 5) {
-			req.setAttribute("error", "계정이 잠겼습니다. 비밀번호 변경 후 로그인 해 주세요");
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/loginForm.do?error");
-			dispatcher.forward(req, res);
+			throw new DisabledException("계정이 비활성화되었습니다. 비밀번호 변경 후 로그인 해 주세요");
+//			req.setAttribute("error", "계정이 잠겼습니다. 비밀번호 변경 후 로그인 해 주세요");
+//			RequestDispatcher dispatcher = req.getRequestDispatcher("/loginForm.do?error");
+//			dispatcher.forward(req, res);
 			
 		// 2. 계정이 잠기지 않았을 때
 		} else {

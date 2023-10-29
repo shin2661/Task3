@@ -7,6 +7,10 @@
 	http://www.springframework.org/schema/security 
 	http://www.springframework.org/schema/security/spring-security.xsd">
  
+<!--  	<global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/> -->
+<!--  	<global-method-security pre-post-annotations="enabled" secured-annotations="enabled" proxy-target-class="true"/> -->
+ 	
+ 
 	<beans:bean id="loginSuccessHandler" class="com.crizen.task3.security.LoginSuccessHandler"/>
 	<beans:bean id="loginFailureHandler" class="com.crizen.task3.security.LoginFailureHandler"/>
 	<beans:bean id="accessDeniedHandler" class="com.crizen.task3.security.AccessDeniedHandler"/>
@@ -18,25 +22,27 @@
 		<intercept-url pattern="/css/**" access="permitAll" />
 		<intercept-url pattern="/js/**" access="permitAll" />
 
-		<intercept-url pattern="/**" access="permitAll" />
 		
         <!-- 로그인된 상태에서는 로그인이나 회원가입 화면에 접근 못하도록 함 -->
 		<intercept-url pattern="/joinForm.do" access="isAnonymous()" />
 		<intercept-url pattern="/loginForm.do" access="isAnonymous()" />
+		
 		<intercept-url pattern="/joinPro.do" access="permitAll" />
 		
-		<!-- 메인페이지는는 모두 접근 허용 -->
+		<!-- 메인페이지는 모두 접근 허용 -->
 		<intercept-url pattern="/main.do" access="permitAll" />
 		
 		<!-- 관리자페이지는 관리자만 접근 허용 -->
-		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-		<intercept-url pattern="/user/**" access="ROLE_USER" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		
+		<!-- IP주소 접근권한 설정 -->
+		<intercept-url pattern="/secured/**" access="hasIpAddress('0:0:0:0:0:0:0:1')" />
 		
 		<!-- 로그인 설정 -->
 		<form-login login-page="/loginForm.do" 
-					default-target-url="/main.do" 
-					authentication-failure-handler-ref="loginFailureHandler"
 					authentication-success-handler-ref="loginSuccessHandler"
+					authentication-failure-handler-ref="loginFailureHandler"
 					username-parameter="id" 
 					password-parameter="passwd" />
 		
@@ -44,10 +50,10 @@
 		<logout logout-url="/logout" 
 				logout-success-url="/main.do" 
 				invalidate-session="true"
-				delete-cookies="remember-me"/>
+				delete-cookies="remember-me, JSESSIONID"/>
 				
 		<!-- 권한이 없어서 금지된 URI 접속할 때 보여줄 페이지(403 에러 페이지 대체) -->
-<!-- 		<access-denied-handler error-page="/accessDenied.do"/> -->
+		<access-denied-handler error-page="/accessDenied.do"/>
 
 		<remember-me token-validity-seconds="604800" 
 		            data-source-ref="dataSource"
@@ -73,6 +79,4 @@
 <!--         </authentication-provider> -->
 <!--     </authentication-manager> -->
 
-<!-- 	<global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/> -->
-    
 </beans:beans>

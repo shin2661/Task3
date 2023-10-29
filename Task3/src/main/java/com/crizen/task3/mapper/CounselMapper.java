@@ -32,12 +32,14 @@ public interface CounselMapper {
 	// 검색기능 추가한 목록 조회
 	List<CounselVO> selectCounselListForSearch(@Param("searchType") String searchType, 
 												@Param("searchKeyword") String searchKeyword, 
+												@Param("searchDate") String searchDate, 
 												@Param("startRow") int startRow, 
 												@Param("listLimit") int listLimit);
 
 	// 
 	int selectCounselListCount(@Param("searchType") String searchType, 
-			@Param("searchKeyword") String searchKeyword);
+								@Param("searchKeyword") String searchKeyword, 
+								@Param("searchDate") String searchDate);
 
 	
 

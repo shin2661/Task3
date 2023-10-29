@@ -53,15 +53,15 @@ public class CounselServiceImpl implements CounselService {
 
 	// 검색기능 추가한 목록 조회
 	@Override
-	public List<CounselVO> getCounselListForSearch(String searchType, String searchKeyword, int startRow,
-			int listLimit) {
-		return mapper.selectCounselListForSearch(searchType, searchKeyword, startRow, listLimit);
+	public List<CounselVO> getCounselListForSearch(String searchType, String searchKeyword, String searchDate, 
+													int startRow, int listLimit) {
+		return mapper.selectCounselListForSearch(searchType, searchKeyword, searchDate, startRow, listLimit);
 	}
 
 	// 
 	@Override
-	public int getCounselListCount(String searchType, String searchKeyword) {
-		return mapper.selectCounselListCount(searchType, searchKeyword);
+	public int getCounselListCount(String searchType, String searchKeyword, String searchDate) {
+		return mapper.selectCounselListCount(searchType, searchKeyword, searchDate);
 	}
 
 	

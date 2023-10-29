@@ -26,10 +26,10 @@ public interface CounselService {
 	int modifyCounsel(CounselVO counsel);
 
 	// 검색기능 추가한 목록 조회
-	List<CounselVO> getCounselListForSearch(String searchType, String searchKeyword, int startRow, int listLimit);
+	List<CounselVO> getCounselListForSearch(String searchType, String searchKeyword, String searchDate, int startRow, int listLimit);
 
 	// 목록개수 조회
-	int getCounselListCount(String searchType, String searchKeyword);
+	int getCounselListCount(String searchType, String searchKeyword, String searchDate);
 
 	
 
