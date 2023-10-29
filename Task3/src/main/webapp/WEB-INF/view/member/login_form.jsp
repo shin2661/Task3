@@ -26,17 +26,11 @@
 	
 		<div class="px-3">
 			<form:form action="${pageContext.request.contextPath}/login" method="POST">
-<%-- 				<c:if test="${param.error != null}"> --%>
-<!-- 					<p>아이디와 비밀번호가 잘못되었습니다.</p> -->
-<%-- 				</c:if> --%>
 				<c:if test="${not empty error}">
 					<font color="red">
 						<p>Your login attempt was not successful due to <br/>
 						${error }</p>
 					</font>
-				</c:if>
-				<c:if test="${param.logout != null}">
-					<p>로그아웃 하였습니다.</p>
 				</c:if>
 				<div class="mb-3">
 					<label for="inputId">아이디</label>

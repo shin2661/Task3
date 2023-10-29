@@ -15,7 +15,7 @@ public class MemberVO {
 	private Date update_date;
 	private int fail_count;
 	
-	private int enabled;
+	private int isEnabled;
 	private int locked;
 	private List<AuthVO> authList = new ArrayList<>();
 

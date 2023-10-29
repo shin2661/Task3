@@ -44,6 +44,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 		        if (member.getFail_count() >= 4) {
 		        	member.setFail_count(member.getFail_count() + 1);
 		            member.setLocked(1); // 계정 잠금 상태로 설정
+		            member.setIsEnabled(1); // 계정 비활성 상태로 설정
 		            mapper.updateLocked(member); // 멤버 정보 업데이트
 		            req.setAttribute("error", "비밀번호 5회 오류로 계정이 비활성화 되었습니다. 비밀번호를 변경해 주세요.");
 		            
